@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddItemTableViewController: UIViewController {
+class AddItemViewController: UIViewController {
+    // アイテム名を入力するテキストフィールド
     @IBOutlet weak var nameTextField: UITextField!
-    
 }

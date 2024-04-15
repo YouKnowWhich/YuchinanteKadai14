@@ -38,7 +38,7 @@ class TableViewController: UITableViewController {
     // セルを構築するメソッド
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // セルを取得し、カスタムセルにダウンキャスト
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell1", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell1", for: indexPath) as! ItemTableViewCell
 
         // アイテムを取得
         let item = items[indexPath.row]
@@ -56,6 +56,21 @@ class TableViewController: UITableViewController {
         return cell
     }
 
+    // Cancelボタンがタップされた時に呼ばれるメソッド
+    @IBAction func didTapCancelButton(segue: UIStoryboardSegue) {
+    }
 
+    // AddItemViewControllerからの遷移によるデータの追加処理を行うメソッド
+    @IBAction func didTapAddByButton(segue: UIStoryboardSegue) {
+        // SegueのソースがAddItemViewControllerであることを確認し、安全にキャストする
+        if let add = segue.source as? AddItemViewController,
+           // AddItemViewControllerから入力されたアイテム名を取得する
+           let itemName = add.nameTextField.text {
+            // アイテム名とチェック状態を辞書型に格納し、itemsに追加する
+            let item: [String: Any] = [KeyName: itemName, KeyCheck: false]
+            self.items.append(item)
+            // テーブルビューをリロードして表示を更新する
+            self.tableView.reloadData()
+        }
+    }
 }
-
