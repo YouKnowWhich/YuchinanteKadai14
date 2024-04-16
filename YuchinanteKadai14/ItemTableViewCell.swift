@@ -10,8 +10,18 @@ import UIKit
 
 class ItemTableViewCell: UITableViewCell {
     // アイテムが選択されているかを表示する画像ビュー
-    @IBOutlet weak var checkImageView: UIImageView!
+    @IBOutlet private weak var checkImageView: UIImageView!
 
     // アイテム名を表示するラベル
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+
+    func configure(name: String, isChecked: Bool) {
+        if isChecked {
+            checkImageView.image = UIImage(named: "check")
+        } else {
+            checkImageView.image = nil
+        }
+
+        nameLabel.text = name
+    }
 }
