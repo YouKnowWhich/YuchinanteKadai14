@@ -22,7 +22,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
 
         // アイテムの初期化
-        self.items = [
+        items = [
             [KeyName: "りんご", KeyCheck: false],
             [KeyName: "みかん", KeyCheck: true],
             [KeyName: "バナナ", KeyCheck: false],
@@ -43,15 +43,7 @@ class TableViewController: UITableViewController {
         // アイテムを取得
         let item = items[indexPath.row]
 
-        // アイテムのチェック状態に応じてセルの表示を変更
-        if item[KeyCheck] as? Bool == true {
-            cell.checkImageView.image = UIImage(named: "check")
-        } else {
-            cell.checkImageView.image = nil
-        }
-
-        // アイテムの名前をセルのラベルに表示
-        cell.nameLabel.text = (item[KeyName] as? String) ?? ""
+        cell.configure(name: (item[KeyName] as? String) ?? "", isChecked: (item[KeyCheck] as? Bool) ?? false)
 
         return cell
     }
@@ -63,14 +55,12 @@ class TableViewController: UITableViewController {
     // AddItemViewControllerからの遷移によるデータの追加処理を行うメソッド
     @IBAction func didTapAddByButton(segue: UIStoryboardSegue) {
         // SegueのソースがAddItemViewControllerであることを確認し、安全にキャストする
-        if let add = segue.source as? AddItemViewController,
-           // AddItemViewControllerから入力されたアイテム名を取得する
-           let itemName = add.nameTextField.text {
-            // アイテム名とチェック状態を辞書型に格納し、itemsに追加する
-            let item: [String: Any] = [KeyName: itemName, KeyCheck: false]
-            self.items.append(item)
-            // テーブルビューをリロードして表示を更新する
-            self.tableView.reloadData()
+        if let add = segue.source as? AddItemViewController  {
+               // アイテム名とチェック状態を辞書型に格納し、itemsに追加する
+               let item: [String: Any] = [KeyName: add.name, KeyCheck: false]
+               items.append(item)
+               // テーブルビューをリロードして表示を更新する
+               tableView.reloadData()
         }
     }
 }

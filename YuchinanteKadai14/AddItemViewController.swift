@@ -10,5 +10,9 @@ import UIKit
 
 class AddItemViewController: UIViewController {
     // アイテム名を入力するテキストフィールド
-    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet private weak var nameTextField: UITextField!
+
+    var name: String {
+        nameTextField.text ?? ""
+    }
 }
